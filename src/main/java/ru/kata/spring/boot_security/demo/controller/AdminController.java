@@ -47,11 +47,13 @@ public class AdminController {
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("user") @Valid User user
-            , BindingResult bindingResult
-            , @ModelAttribute("roles") List<Role> roles) {
+    public String saveUser(@ModelAttribute("user") @Valid User user,
+                           BindingResult bindingResult,
+                           Model model) {
+        List<Role> allRoles = roleService.getAllRoles();
+        model.addAttribute("roles", allRoles); // Всегда добавляем роли в модель
+
         if (bindingResult.hasErrors()) {
-            roles.addAll(roleService.getAllRoles());
             return "/admin/user-create";
         } else {
             userService.saveUser(user);

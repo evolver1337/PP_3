@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         Optional<User> exUser = userRepository.findById(user.getId());
         if (exUser.isPresent()) {
             editUser(user, exUser);
@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
         }
+        return user;
     }
 
     @Transactional
