@@ -2,22 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All users</title>
+    <title>All Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <h2>All users</h2>
-    <table>
-        <thead>
+<div class="container mt-5">
+    <h2>All Users</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Email</th>
             <th>Name</th>
             <th>Age</th>
             <th>Roles</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <tr var="user" items="${users}">
         <tr th:each="user : ${users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.email}"></td>
@@ -25,23 +27,23 @@
             <td th:text="${user.age}"></td>
             <td th:text="${#strings.listJoin(user.roles, ', ')}"></td>
             <td>
-                <form th:action="@{/admin/users/edit}">
-                    <button type="submit" th:name="id" th:value="${user.id}">Edit</button>
+                <form th:action="@{/admin/users/edit}" class="d-inline">
+                    <button type="submit" th:name="id" th:value="${user.id}" class="btn btn-primary btn-sm">Edit</button>
                 </form>
-            </td>
-            <td>
-                <form th:method="delete" th:action="@{/admin/users/delete}">
-                    <button type="submit" th:name="id" th:value="${user.id}">Delete</button>
+                <form th:method="delete" th:action="@{/admin/users/delete}" class="d-inline">
+                    <button type="submit" th:name="id" th:value="${user.id}" class="btn btn-danger btn-sm">Delete</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
-    <a href="/admin/users/new">Create new user</a>
-    <a href="/user">User info</a>
-    <br/>
+    <div class="mb-3">
+        <a href="/admin/users/new" class="btn btn-success">Create New User</a>
+        <a href="/user" class="btn btn-info">User Info</a>
+    </div>
     <form th:action="@{/logout}" method="POST">
-        <input type="submit" value="Logout"/>
+        <button type="submit" class="btn btn-secondary">Logout</button>
     </form>
+</div>
 </body>
 </html>

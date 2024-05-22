@@ -7,13 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuthController {
 
-    @RequestMapping("/")
-    public String root() {
-        return "redirect:/login";
-    }
-
-    @GetMapping("/login")
-    public String getLoginPage() {
+    @GetMapping("/")
+    public String showStart() {
         return "login";
     }
+
 }

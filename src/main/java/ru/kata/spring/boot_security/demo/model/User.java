@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -35,7 +36,7 @@ public class User implements UserDetails {
     @Column(name = "age", nullable = false)
     private int age;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -53,13 +54,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")}
     )
-    private Collection<Role> roles;
+    private Set<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -140,7 +141,7 @@ public class User implements UserDetails {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 }

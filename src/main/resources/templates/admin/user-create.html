@@ -2,41 +2,56 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create user</title>
+    <title>Create User</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-    <h2>Create user</h2>
-    <form th:action="@{/admin/users}" th:object="${user}" method="POST">
-        <label for="email">Email</label>
-        <input type="text" id="email" th:field="*{email}" required>
-        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</div>
-        </br>
+<div class="container mt-5">
+    <h2>Create User</h2>
+    <form th:action="@{/admin/users}" th:object="${user}" method="POST" class="mb-4">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
+        </div>
 
-        <label for="password">Password</label>
-        <input type="password" id="password" th:field="*{password}" required>
-        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
-        </br>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" class="form-control" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+        </div>
 
-        <label for="name">Name</label>
-        <input type="text" id="name" th:field="*{name}" required>
-        <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-        </br>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+        </div>
 
-        <label for="age">Age</label>
-        <input type="text" id="age" th:field="*{age}" required>
-        <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</div>
-        </br>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+        </div>
 
-        <th:block th:each="role: ${roles}">
-            <input type="checkbox" th:field="*{roles}"
-                   th:text="${role.name}" th:value="${role.id}"/>
-        </th:block>
-        </br>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" th:field="*{age}" class="form-control" required>
+            <div class="text-danger" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
+        </div>
 
-        <button type="submit">create user</button>
+        <div class="form-group">
+            <label>Roles</label>
+            <div th:each="role: ${roles}" class="form-check">
+                <input type="checkbox" th:field="*{roles}" th:value="${role.id}" class="form-check-input">
+                <label class="form-check-label" th:text="${role.name}"></label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create User</button>
     </form>
     <form th:action="@{/logout}" method="POST">
-        <input type="submit" value="Logout"/>
+        <button type="submit" class="btn btn-secondary">Logout</button>
     </form>
+</div>
 </body>
 </html>
